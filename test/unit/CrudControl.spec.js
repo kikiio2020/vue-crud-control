@@ -205,6 +205,13 @@ describe('crud-control data grid test', () => {
 		});
 	});
 	
+	it('On loadData() is available', (done) => {
+		moxios.wait(async () => {
+			wrapper.vm.loadData();
+			done();
+		});
+	});
+	
 	it('On insert new record is added with correct API data', (done) => {
 		moxios.wait(async () => {
 			const insertBtn = wrapper.findComponent({ref: 'insertModelButton'});
