@@ -136,7 +136,7 @@ An array of object that specifies the possible actions. Standard actions are `ed
 
 |Key|Description|
 |:---:|---|
-|text|Caption for the action|
+|label|Caption for the action|
 |event|Custom event to be emitted when the action item is clicked|
 |fontawesome|Optional Fontawesome icon to be shown beside the caption. You can only use either this or `icon` but not both|
 |icon|Optional `b-icon` to be shown beside the caption. You can only use either this or `fontawsome` but not both|
