@@ -140,13 +140,15 @@ An array of object that specifies the possible actions. Standard actions are `ed
 |event|Custom event to be emitted when the action item is clicked|
 |fontawesome|Optional Fontawesome icon to be shown beside the caption. You can only use either this or `icon` but not both|
 |icon|Optional `b-icon` to be shown beside the caption. You can only use either this or `fontawsome` but not both|
+|disabled|Optional boolean to indicate if action should be disabled. It can also be a passback with the row object as an argument|
 
 Example:
 ``` js
 {
-	text: 'Connect',
+	label: 'Connect',
 	event: 'connect-clicked',
 	fontawesome: 'fas fa-hands-helping',
+	disabled(row){return row.item.canConnect}
 }
 ```
 

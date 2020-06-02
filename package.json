@@ -1,6 +1,6 @@
 {
   "name": "@kikiio2020/vue-crud-control",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "An opinionated bootstrap-vue data table that loads a GET API end point and provision UI elements for the other CRUD actions.",
   "main": "dist/crud-control.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "test": "mochapack --webpack-config ./webpack.unittest.config.js --require test/unit/setup.js test/unit/*.spec.js",
     "inspect": "node --inspect --inspect-brk ./node_modules/mochapack/bin/mochapack --webpack-config ./webpack.unittest.config.js --require test/unit/setup.js test/unit/*.spec.js",
     "docs:dev": "vuepress dev docs",
-	"docs:build": "vuepress build docs"
+    "docs:build": "vuepress build docs"
   },
   "repository": {
     "type": "git",
@@ -34,13 +34,13 @@
     "bootstrap": "^4.5.0",
     "bootstrap-vue": "^2.15.0",
     "portal-vue": "^2.1.7",
-    "vee-validate": "^3.3.0",
+    "vee-validate": "^3.3.1",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.10.0",
-    "@babel/preset-env": "^7.10.0",
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
     "@vue/test-utils": "^1.0.3",
     "axios": "^0.19.2",
     "babel": "^6.23.0",
