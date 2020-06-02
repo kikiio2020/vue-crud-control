@@ -1,6 +1,6 @@
 {
   "name": "@kikiio2020/vue-crud-control",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "An opinionated bootstrap-vue data table that loads a GET API end point and provision UI elements for the other CRUD actions.",
   "main": "dist/crud-control.js",
   "scripts": {
