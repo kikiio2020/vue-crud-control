@@ -139,17 +139,9 @@
 <script>
 import { BTable, BForm, BFormInput, BModal, BFormTextarea, BFormFile, BFormInvalidFeedback } from 'bootstrap-vue';
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
-import { required, image, size } from 'vee-validate/dist/rules';
 import axios from 'axios';
 
 import ModalField from './ModalField.vue';
-
-extend('image', image);
-extend('size', size);
-extend('required', {
-    ...required,
-    message: "{_field_} is required"
-});
 
 export default {
     components: {
