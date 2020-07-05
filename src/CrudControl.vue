@@ -73,7 +73,6 @@
             <ValidationObserver ref="formObserver" v-slot="formContext">
                 <b-form ref="form" v-on="getFormValidationState(formContext)" @submit.stop.prevent="handleSubmit">
                     
-                    
                     <div v-for="(modalField, key) in modalFields">
                         <modal-field
                             ref="modalField"
@@ -86,10 +85,13 @@
                             :api="api"
                         ></modal-field>
                     </div>
-
                     
                 </b-form>
             </ValidationObserver>
+
+			<!-- Workaround for weird mutation visibility issue inside ValidationObserver -->
+            <input type="hidden" :value="editModalRecord.id">
+
             <template v-slot:modal-footer>
                 <div class="w-100 text-right">
                     <b-button 
@@ -139,6 +141,14 @@
 <script>
 import { BTable, BForm, BFormInput, BModal, BFormTextarea, BFormFile, BFormInvalidFeedback } from 'bootstrap-vue';
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
+import * as rules from 'vee-validate/dist/rules';
+import { messages } from 'vee-validate/dist/locale/en.json';
+Object.keys(rules).forEach(rule => {
+	extend(rule, {
+    	...rules[rule],
+	    message: messages[rule],
+  	});
+});
 import axios from 'axios';
 
 import ModalField from './ModalField.vue';
