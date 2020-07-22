@@ -70,28 +70,26 @@
         ></b-pagination>
         <!-- Edit modal -->
         <b-modal ref="modal" :id="id" :size='modalSize' :title="editModalTitle" ok-title="Save" @hide="handleModalHide" no-close-on-backdrop>
-            <ValidationObserver ref="formObserver" v-slot="formContext">
+             <ValidationObserver ref="formObserver" v-slot="formContext"> 
                 <b-form ref="form" v-on="getFormValidationState(formContext)" @submit.stop.prevent="handleSubmit">
-                    
-                    <div v-for="(modalField, key) in modalFields">
-                        <modal-field
-                            ref="modalField"
-                            v-if = "!modalField.requireModel || editModalRecord.id > 0"
-                            :modal-field-properties="modalField"
-                            v-model="editModalRecord[modalField.id]"
-                            :disabled="saving"
-                            :model-id="editModalRecord.id"
-                            :user-name="userName"
-                            :api="api"
-                        ></modal-field>
-                    </div>
-                    
+					<modal-field
+                        v-for="(modalField, key) in visibleModalFields"
+                        v-bind:key="modalField.id"
+                        ref="modalField"
+                        :modal-field-properties="modalField"
+                        v-model="editModalRecord[modalField.id]"
+                        :disabled="saving"
+                        :model-id="editModalRecord.id"
+                        :user-name="userName"
+                        :api="api"
+                    ></modal-field>
                 </b-form>
             </ValidationObserver>
-
-			<!-- Workaround for weird mutation visibility issue inside ValidationObserver -->
+            
+           	<!-- Workaround for weird mutation visibility issue inside ValidationObserver -->
             <input type="hidden" :value="editModalRecord.id">
-
+            <input type="hidden" :value="visibleModalFields">
+            
             <template v-slot:modal-footer>
                 <div class="w-100 text-right">
                     <b-button 
@@ -166,7 +164,7 @@ export default {
         'gridFields': {},
         'actions': {},
         'buttons': {},
-        'modalFields': {},
+        'modalFields': Array,
         'initialValues': {
             default: {
                 id: 0, //must have ID for any <model-*> fields to work
@@ -198,7 +196,7 @@ export default {
         return {
             filter: '',
             items: [],
-            editModalRecord: this.initialValues,
+            editModalRecord: JSON.parse(JSON.stringify(this.initialValues)),
             originalModalRecord: JSON.parse(JSON.stringify(this.initialValues)),
             editModalTitle: '',
             editModalNew: false,
@@ -243,14 +241,6 @@ export default {
             this.editModalReadOnly = false;
             this.$root.$emit('bv::show::modal', this.id, button);
         },
-        setOriginalModalRecord(original) {
-            if (!original) {
-                return this.originalModalRecord;
-            }
-            this.originalModalRecord = { ...original };
-
-            return this.originalModalRecord;
-        },
         remove(row) {
             this.removeConfirmRowId = row.item.id;
             this.$root.$emit('bv::show::modal', 'removeConfirmBox');
@@ -291,9 +281,6 @@ export default {
                     this.$emit('record-remove-failed', id);
                     this.$emit('async-returns', id);
                 });
-        },
-        resetEditModal() {
-            this.editModalRecord = this.setOriginalModalRecord();
         },
         checkFormValidity() {
             const valid = this.$refs.form.checkValidity()
@@ -368,9 +355,13 @@ export default {
                     });
                     this.$emit(successEvent, response.data.id);
                     this.$emit('async-returns', response.data.id);
-                	if (!this.editModalNew || !this.hasRequireModelField) {
+                	if (
+						!this.hasRequireModelField
+                		|| !this.editModalNew 
+                	) {
                     	this.resetEditModal();
                     	this.$root.$emit('bv::hide::modal', this.id);
+                    	return;
                     }
                     this.editModalRecord.id = response.data.id;
                     this.editModalNew = false;
@@ -384,6 +375,9 @@ export default {
                     this.$emit(failEvent, this.editModalRecord.id);
                     this.$emit('async-returns', response.data.id);
                 });
+        },
+        resetEditModal() {
+            this.editModalRecord = JSON.parse(JSON.stringify(this.originalModalRecord));
         },
         getValidationState({ dirty, validated, valid = null, invalid }) {
             return dirty || validated ? valid : null;
@@ -418,16 +412,45 @@ export default {
         },
         onRowSelected(item) {
             this.rowsSelected = item;
-        }
+        },
     },
     computed: {
-        hasRequireModelField: function() {
-            const modelField = this.modalFields.find((modelField) => {
-                return modelField.requireModel;
-            })
-            
-            return modelField && modelField.requireModel;
+        hasRequireModelField: function () {
+        	const modalField = this.modalFields.find(modalField => {
+        		if (!modalField.requireModel) {
+        			return false;
+        		}
+        		if (!('conditions' in modalField)) {
+           			return true;
+               	}
+        		
+        		return Object.entries(modalField.conditions).reduce(
+       				(result, entry) => {
+       					return (result || this.editModalRecord[entry[0]] == entry[1]);
+       				},
+       				false
+      			)
+        	});
+        	
+        	return modalField !== undefined;
         },
+        visibleModalFields: function () {
+        	return this.modalFields.filter(modalField => {
+        		if (modalField.requireModel && this.editModalRecord.id <= 0) {
+        			return false;
+        		}
+        		if (!('conditions' in modalField)) {
+           			return true;
+               	}
+        		
+        		return Object.entries(modalField.conditions).reduce(
+       				(result, entry) => {
+       					return (result || this.editModalRecord[entry[0]] == entry[1]);
+       				},
+       				false
+      			)
+        	});
+        }
     },
     mounted() {
         this.loadData();

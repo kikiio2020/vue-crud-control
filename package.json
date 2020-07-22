@@ -1,6 +1,6 @@
 {
   "name": "@kikiio2020/vue-crud-control",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "An opinionated bootstrap-vue data table that loads a GET API end point and provision UI elements for the other CRUD actions.",
   "main": "dist/crud-control.js",
   "scripts": {
@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/kikiio2020/vue-crud-control#readme",
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.13.0",
+    "@fortawesome/fontawesome-free": "^5.14.0",
     "bootstrap": "^4.5.0",
     "bootstrap-vue": "^2.15.0",
     "portal-vue": "^2.1.7",
@@ -46,14 +46,14 @@
     "babel": "^6.23.0",
     "babel-loader": "^8.1.0",
     "chai": "^4.2.0",
-    "jsdom": "^16.2.2",
+    "jsdom": "^16.3.0",
     "jsdom-global": "^3.0.2",
     "mocha": "^7.2.0",
-    "mochapack": "^2.0.0",
+    "mochapack": "^2.0.3",
     "moxios": "^0.4.0",
-    "vue-loader": "^15.9.2",
+    "vue-loader": "^15.9.3",
     "vue-template-compiler": "^2.6.11",
-    "vuepress": "^1.5.0",
+    "vuepress": "^1.5.2",
     "webpack": "^4.43.0"
   }
 }

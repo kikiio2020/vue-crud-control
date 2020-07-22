@@ -1,4 +1,5 @@
 <template>
+    <keep-alive>
     <ValidationProvider :name="modalFieldProperties.caption" :rules="modalFieldProperties.rules" v-slot="validationContext">
         
         <component 
@@ -17,6 +18,7 @@
     
         <b-form-invalid-feedback id="feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
     </ValidationProvider>
+    </keep-alive>
 </template>
 <script>
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
@@ -50,7 +52,7 @@ export default {
         }
     },
     methods: {
-        getValidationState({ dirty, validated, valid = null, invalid }) {
+    	getValidationState({ dirty, validated, valid = null, invalid }) {
             return dirty || validated ? valid : null;
         },
         onContext(ctx) {
