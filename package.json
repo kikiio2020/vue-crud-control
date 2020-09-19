@@ -32,16 +32,16 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.14.0",
     "bootstrap": "^4.5.2",
-    "bootstrap-vue": "^2.16.0",
+    "bootstrap-vue": "^2.17.3",
     "portal-vue": "^2.1.7",
-    "vee-validate": "^3.3.9",
-    "vue": "^2.6.11",
+    "vee-validate": "^3.3.11",
+    "vue": "^2.6.12",
     "vue-axios": "^2.1.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.1",
-    "@babel/preset-env": "^7.11.0",
-    "@vue/test-utils": "^1.0.3",
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
+    "@vue/test-utils": "^1.1.0",
     "axios": "^0.19.2",
     "babel": "^6.23.0",
     "babel-loader": "^8.1.0",
@@ -52,8 +52,8 @@
     "mochapack": "^2.0.3",
     "moxios": "^0.4.0",
     "vue-loader": "^15.9.3",
-    "vue-template-compiler": "^2.6.11",
-    "vuepress": "^1.5.3",
-    "webpack": "^4.44.1"
+    "vue-template-compiler": "^2.6.12",
+    "vuepress": "^1.5.4",
+    "webpack": "^4.44.2"
   }
 }
